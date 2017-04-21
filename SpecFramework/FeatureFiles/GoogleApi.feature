@@ -3,10 +3,11 @@ Feature: GoogleApi
 
 @api
 Scenario Outline: Verify Latitude and Longitude 
+#Test
 	Given Google api that takes address and returns latitude and longitude
 	When The client Gets response by <address>
 	Then The < Latitude> and <Longitude> returned should be as expected
-
+	
 	@source:DataResources\APIData.xlsx
 	Examples: 
 	| address                                      | Latitude   | Longitude |
