@@ -18,6 +18,8 @@ namespace SpecFramework.Jira.JiraBug
     {
         string tktID = null;
         string tktkey = null;
+        private string timestamp;
+
         public void getJiraTicketId(string featurpath, string bugSummary, string scenarioName)
         {
             HttpClient client1 = new HttpClient();
@@ -38,6 +40,8 @@ namespace SpecFramework.Jira.JiraBug
                 {
                     tktID = item.id;
                     tktkey = item.key;
+                    Console.WriteLine("Tick id =" +tktID );
+                    Console.WriteLine("Tick key =" + tktkey);
                     break;
                 }
 
@@ -46,6 +50,8 @@ namespace SpecFramework.Jira.JiraBug
 
             List<string> Text = File.ReadAllLines(featurpath).ToList();
             string keyToInsert = "#" + tktkey;
+            timestamp = GetTimestamp(DateTime.Now);
+            string finalTextToInsert = keyToInsert + " Opened on: " + timestamp;
             string trimmedText = keyToInsert.Remove(7);
             if (Text.Contains(keyToInsert))
             {
@@ -60,13 +66,14 @@ namespace SpecFramework.Jira.JiraBug
                 if (a.Contains(trimmedText))
                 {
                     Text.Remove(a);
-                    Text.Insert(index, keyToInsert);
+                    Console.WriteLine("whole text =" + index + finalTextToInsert);
+                    Text.Insert(index, finalTextToInsert);
                     //Text[index].Replace(a, keyToInsert);
                     System.IO.File.WriteAllLines(featurpath, Text);
                 }
                 else
                 {
-                    Text.Insert(index, keyToInsert);
+                    Text.Insert(index, finalTextToInsert);
 
                     System.IO.File.WriteAllLines(featurpath, Text);
                 }
@@ -127,7 +134,10 @@ namespace SpecFramework.Jira.JiraBug
 
 
         }
-
+        public static String GetTimestamp(DateTime value)
+        {
+            return value.ToString("dd-MM-yyyy, HH:mm");
+        }
     }
 }
 

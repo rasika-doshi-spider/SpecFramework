@@ -35,8 +35,9 @@ namespace SpecFramework.Jira.JiraBug
             Console.WriteLine("firstindex: " + index);
 
               index = index + 2;
-            Console.WriteLine("Text here:" + Text[index]);
             Console.WriteLine("index: " + index);
+            Console.WriteLine("Text here:" + Text[index]);
+            
             string a = Text[index];
             Console.WriteLine("a: " + a+ "index"+ index);
             if (a.Contains("Given"))

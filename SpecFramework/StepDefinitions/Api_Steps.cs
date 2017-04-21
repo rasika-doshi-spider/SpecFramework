@@ -28,6 +28,7 @@ namespace SpecFrame.StepDefinitionFiles
         private string timestamp;
 
         BugCreate bug = new BugCreate();
+        AddJiraComment comment = new AddJiraComment();
     
         string exceptiontext = null;
         string bugsummary = null;
@@ -86,6 +87,7 @@ namespace SpecFrame.StepDefinitionFiles
                 Assert.AreEqual(location.lng.ToString(), exp_lng);
           
                 latestexecuttext = "#Last Execution Passed on: "+timestamp;
+                comment.addComment(bugsummary,latestexecuttext);
             //    ts.update(featureFilePath, bugsummary, scenarioname, latestexecuttext, bugcreateflag);
 
             }
@@ -94,6 +96,7 @@ namespace SpecFrame.StepDefinitionFiles
                 bugcreateflag = true;
        
                 latestexecuttext = "#Last Execution Failed on: "+timestamp;
+                comment.addComment(bugsummary, latestexecuttext);
                 exceptiontext = ex.ToString();
                 throw ex;
             }
